@@ -1,0 +1,173 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta name="author" content="Pharaoh" />
+		<title>[<%= curPath %>]  -- File List</title>
+    <style type="text/css">
+    table {
+      width:100%;
+      max-width: 900px;
+      font-size: 20px;
+    }
+    tr:nth-child(odd) {
+      background: #EEF3FF;
+    }
+    a {
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    </style>
+	</head>
+<body>
+<h1>Current Path:<%= curPath %>
+<form method="post" enctype="multipart/form-data" action="?cmd=upload">
+  <input type="file" name="files">
+  <input type="submit">
+</form>
+</h1>
+<h2>Directorys: <button onclick="createDir();">New Dir</button></h2>
+  <table>
+    <% paths.forEach(function(path){ %>
+      <tr>
+      <td><a href="<%= path.name %>/"><%= path.name %></a></td>
+      <td><b> <%= path.time %> </b></td>
+      <td>
+      <% if(path.name != '..') { %>
+        <button onclick='changeName("<%= path.name %>")'>Rename</button>
+        <button onclick='deletePath("<%= path.name %>")'>Delete</button>    
+      <% } %>    
+      </td>
+      </tr>
+    <% }) %>
+  </table>
+<h2>Files:</h2>
+  <table>
+    <% files.forEach(function(file){ %>
+      <tr>
+      <td><a href="<%= file.name %>"><%= file.name %></a>  </td>
+      <td>
+        <b><%= file.time %></b>
+      </td>
+      <td>
+        <i> <%= file.size %></i>
+      </td>
+      <td>
+        <button onclick='changeName("<%= file.name %>")'>Rename</button>
+        <button onclick='deleteFile("<%= file.name %>")'>Delete</button> 
+        <!-- <button onclick='unzip("<%= file.name %>")'>Unzip</button> -->
+        <button onclick='run("<%= file.name %>")'>Run</button>
+      </td>
+       
+
+      </tr>
+    <% }) %>
+  </table>
+
+
+<script type="text/javascript">
+
+function unzip (filename) {
+  if(confirm("unzip file:"+filename+"?")) {
+    var url = '?cmd=unzip&filename='+encodeURIComponent(filename);
+    getUrl(url,function(ret){
+      alert(ret);
+      if(ret == "ok") {
+        location.reload();
+      }
+      
+    });      
+  }  
+}
+
+function run (filename) {
+  if(confirm("run file:"+filename+"?")) {
+    var url = '?cmd=run&filename='+encodeURIComponent(filename);
+    getUrl(url,function(ret){
+      alert(ret);
+      if(ret == "ok") {
+        location.reload();
+      }
+    });
+  }  
+}
+
+
+function createDir () {
+    var newdir = prompt("Input new dirname:");
+    if(newdir) {
+      var url = '?cmd=newdir&newdir='+encodeURIComponent(newdir);
+      getUrl(url,function(ret){
+        alert(ret);
+        location.reload();
+      });
+    }
+}
+
+  function deletePath (filename) {
+    if(filename == "..") return;
+    if(confirm("Delete path:"+filename+"?")) {
+      var url = '?cmd=deletepath&filename='+encodeURIComponent(filename);
+      getUrl(url,function(ret){
+        alert(ret);
+        if(ret == "ok") {
+          location.reload();
+        }
+        
+      });      
+    }
+
+  }
+  function deleteFile (filename) {
+    if(filename == "..") return;
+    if(confirm("Delete file:"+filename+"?")) {
+      var url = '?cmd=delete&filename='+encodeURIComponent(filename);
+      getUrl(url,function(ret){
+        alert(ret);
+        if(ret == "ok") {
+          location.reload();
+        }
+        
+      });      
+    }
+
+  }
+
+  function changeName (filename) {
+    if(filename == "..") return;
+    var newfn = prompt("Input new filename:",filename);
+    if(newfn) {
+      if(newfn == filename) {
+        alert("the same filename");
+        return ;
+      }
+      var url = '?cmd=rename&oldfn='+encodeURIComponent(filename)+"&newfn="+encodeURIComponent(newfn);
+      getUrl(url,function(ret){
+        alert(ret);
+        location.reload();
+      });
+    }
+  }
+function getUrl(url, fn) {
+    var req = new XMLHttpRequest();
+    req.open("GET", url, true);
+    console.debug("getUrl:", url);
+    req.onreadystatechange = function() {
+        if (req.readyState == 4) {
+            if (req.status == 200) {
+                if (req.responseText.indexOf("error:") == 0) {
+                    alert(req.responseText);
+                }
+                if (fn) fn(req.responseText);
+            } else {
+                alert("getUrl Error:" + req.status + "\n" + url);
+            }
+        }
+    };
+    req.send(null);
+}  
+
+</script>
+
+</body>
+</html>
