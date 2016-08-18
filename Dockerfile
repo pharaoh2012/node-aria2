@@ -6,9 +6,11 @@ FROM alpine
 MAINTAINER kev <noreply@datageek.info>
 
 ENV TOKEN 00000000-0000-0000-0000-000000000000
+ENV fs_browser_root /home/aria2
 
 RUN set -xe \
-    && apk add -U aria2 node \
+    && apk add -U aria2 \
+    && apk add -U nodejs \
     && rm -rf /var/cache/apk/* \
     && aria2c https://github.com/tianon/gosu/releases/download/1.7/gosu-amd64 -o /usr/local/bin/gosu \
     && chmod +x /usr/local/bin/gosu \
