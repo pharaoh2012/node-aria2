@@ -9,7 +9,7 @@ ENV TOKEN 00000000-0000-0000-0000-000000000000
 ENV fs_browser_root /home/aria2
 
 RUN apk add aria2 \
-    apk add nodejs \
+    && apk add nodejs \
     && rm -rf /var/cache/apk/* 
 
 RUN npm install -g pm2
