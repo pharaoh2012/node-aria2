@@ -7,5 +7,4 @@ pm2 start /nodecode/proxy.js
 pm2 start /nodecode/index.js
 
 echo aria2
-chown -R aria2:aria2 /home/aria2
-gosu aria2 aria2c --conf-path=/etc/aria2/aria2.conf --rpc-secret=${TOKEN}
+aria2c --conf-path=/etc/aria2/aria2.conf --rpc-secret=${TOKEN}
