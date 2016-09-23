@@ -18,9 +18,9 @@ RUN npm install -g pm2 && mkdir /nodecode
 COPY aria2.conf /etc/aria2/
 COPY nodecode /nodecode
 COPY start /start
-RUN chmod 755 /start
+RUN chmod 755 /start && cd /nodecode && npm install
 
-VOLUME /home/aria2 && cd /nodecode && npm install
+VOLUME /home/aria2 
 EXPOSE 8080 8899 6800
 
 CMD ["/start"]
