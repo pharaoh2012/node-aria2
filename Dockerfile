@@ -7,6 +7,7 @@ MAINTAINER kev <noreply@datageek.info>
 
 ENV TOKEN 00000000-0000-0000-0000-000000000000
 ENV fs_browser_root /home/aria2
+ENV PM2_LOG_DATE_FORMAT "YYYY-MM-DD HH:mm Z"
 
 RUN set -xe \
 	&& apk add -U aria2 \

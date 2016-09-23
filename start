@@ -2,9 +2,10 @@
 cd /nodecode
 echo install
 #npm install
+mkdir /home/aria2/log/
 echo pm2 start
-pm2 start /nodecode/proxy.js
-pm2 start /nodecode/index.js
+pm2 start /nodecode/proxy.js -l /home/aria2/log/proxy.txt
+pm2 start /nodecode/index.js -l /home/aria2/log/index.txt
 
 echo aria2
 aria2c --conf-path=/etc/aria2/aria2.conf --rpc-secret=${TOKEN}
