@@ -19,7 +19,7 @@ var proxyServer = http.createServer(function (req, res) {
   	proxy.web(req, res, {target:"http://127.0.0.1:6800","changeOrigin":true});
   	return;
   }
-  var target = { target: 'http://localhost:8899',"changeOrigin": true };
+  var target = { target: 'http://127.0.0.1:8899',"changeOrigin": true };
   //
   // ...then proxy to the server whose 'turn' it is...
   //

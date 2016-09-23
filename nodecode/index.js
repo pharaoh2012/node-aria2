@@ -97,6 +97,7 @@ app.get("*", function(req, res) {
 		res.redirect(req.path + "/");
 		return;
 	}
+	res.header("Access-Control-Allow-Origin", "*");
 	var localPath = decodeURIComponent(req.path);
 	var path = homeDir + localPath;
 	if (fs.existsSync(path)) {
