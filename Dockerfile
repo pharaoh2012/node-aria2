@@ -13,7 +13,7 @@ RUN set -xe \
     && apk add -U nodejs \
     && rm -rf /var/cache/apk/* 
 
-RUN npm install -g pm2
+RUN npm install -g pm2 && mkdir /nodecode
 
 COPY aria2.conf /etc/aria2/
 COPY nodecode /nodecode
