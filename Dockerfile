@@ -21,6 +21,6 @@ COPY start /start
 RUN chmod 755 /start
 
 VOLUME /home/aria2 && cd /nodecode && npm install
-EXPOSE 8080
+EXPOSE 8080 8899 6800
 
 CMD ["/start"]
