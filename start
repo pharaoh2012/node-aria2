@@ -1,4 +1,4 @@
-
+#!/bin/sh
 cd /nodecode
 echo install
 npm install
