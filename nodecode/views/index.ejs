@@ -138,10 +138,11 @@ function createDir () {
   }
 
   function downtoxiaom(filename) {
+    filename = encodeURIComponent(filename);
     var fullurl = location.origin+location.pathname + filename;
     console.info(fullurl);
     var url64 = Base64.encode(fullurl);
-    var xmurl = "https://d.miwifi.com/d2r/?url="+url64 + "&name=" + encodeURIComponent(filename);
+    var xmurl = "https://d.miwifi.com/d2r/?url="+url64 + "&name=" + filename;
     console.info(url64,xmurl);
     window.open(xmurl);
   }
